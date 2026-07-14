@@ -64,6 +64,13 @@ EXTENSIONES_VALIDAS = [
     ".m3u",    # Playlist multi-disco
     ".zip",    # ROMs comprimidas
     ".7z",     # ROMs comprimidas 7z
+
+    # --- Ports / Scripts / Engines ---
+    ".sh",       # Scripts de lanzamiento (ports, ej: "Grand Theft Auto San Andreas.sh")
+    ".libretro", # Configuracion de core libretro (ports)
+    ".exe",      # Ejecutables Windows (ports PC)
+    ".desktop",  # Entradas de escritorio Linux (ports)
+    ".py",       # Scripts Python (algunos ports)
 ]
 
 # --------------------------------------------------
