@@ -115,6 +115,30 @@ EXCLUIR_CARPETAS = [
 CALCULAR_HASH = True
 
 # --------------------------------------------------
+# EXTENSIONES SIN HASH (no calcular MD5)
+# --------------------------------------------------
+# Archivos con estas extensiones NO se les calcula el
+# hash MD5, aunque CALCULAR_HASH sea True.
+#
+# Esto evita falsos positivos en archivos de configuracion
+# o scripts que comparten la misma plantilla/base pero
+# corresponden a juegos diferentes.
+#
+# Ejemplo: los archivos .libretro son configs que usan
+# la misma estructura para todos los ports, entonces
+# "2048.libretro" y "anarch.libretro" tienen el mismo
+# hash pero son juegos completamente distintos.
+#
+# Estos archivos SE SIGUEN ESCANEANDO y se detectan
+# duplicados por NOMBRE SIMILAR, solo se salta el hash.
+EXTENSIONES_SIN_HASH = [
+    ".libretro",  # Config de core libretro (misma plantilla para todos)
+    ".sh",        # Scripts de lanzamiento (pueden compartir template)
+    ".desktop",   # Entradas de escritorio Linux (misma estructura)
+    ".py",        # Scripts Python (posible template compartido)
+]
+
+# --------------------------------------------------
 # LIMITE DE TAMANIO PARA HASH (en MB)
 # --------------------------------------------------
 # Archivos mas grandes que este limite se saltaran

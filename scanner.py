@@ -18,6 +18,7 @@ from config import (
     EXCLUIR_CARPETAS,
     CALCULAR_HASH,
     UMBRAL_SIMILITUD,
+    EXTENSIONES_SIN_HASH,
 )
 from utils import (
     calcular_hash_md5,
@@ -58,6 +59,7 @@ def escanear_roms():
     roms = []
     extensiones_set = set(EXTENSIONES_VALIDAS)
     excluidas_set = set(c.lower() for c in EXCLUIR_CARPETAS)
+    sin_hash_set = set(e.lower() for e in EXTENSIONES_SIN_HASH)
 
     # Verificar que la ruta base existe
     if not os.path.isdir(ruta):
@@ -99,7 +101,14 @@ def escanear_roms():
 
             # Obtener informacion del archivo
             tamano = os.path.getsize(ruta_archivo)
-            hash_md5 = calcular_hash_md5(ruta_archivo) if CALCULAR_HASH else ""
+
+            # Decidir si se calcula hash: respetar CALCULAR_HASH global
+            # y tambien la lista EXTENSIONES_SIN_HASH (archivos de config
+            # o scripts donde el hash produce falsos positivos)
+            ext_lower = extension.lower()
+            calcular = CALCULAR_HASH and ext_lower not in sin_hash_set
+            hash_md5 = calcular_hash_md5(ruta_archivo) if calcular else ""
+
             nombre_sugerido = generar_nombre_sugerido(nombre_archivo)
 
             roms.append({
